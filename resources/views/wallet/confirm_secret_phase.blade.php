@@ -205,6 +205,23 @@
             box-shadow: 0 6px 15px rgba(51, 117, 187, 0.4);
         }
 
+        .btn-secondary {
+            background: rgba(42, 51, 68, 0.7);
+            border: 1px solid var(--trust-border);
+            color: var(--trust-text-light);
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 16px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 117, 187, 0.2);
+            border-color: var(--trust-primary);
+        }
+
         .back-button {
             color: var(--trust-text-light);
             background: none;
@@ -221,6 +238,63 @@
         .cards-container {
             max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .success-message .material-icons {
+            font-size: 48px;
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+
+        /* Modal Styling */
+        .modal-content {
+            background: var(--trust-card);
+            color: var(--trust-text-light);
+            border: 1px solid var(--trust-border);
+            border-radius: 16px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--trust-border);
+            padding: 20px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid var(--trust-border);
+            padding: 20px;
+        }
+
+        .download-doc {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: rgba(42, 51, 68, 0.7);
+            border-radius: 12px;
+            border: 1px solid var(--trust-border);
+            color: var(--trust-text-light);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 15px;
+        }
+
+        .download-doc:hover {
+            background: rgba(51, 117, 187, 0.2);
+            border-color: var(--trust-primary);
+            color: var(--trust-text-light);
         }
 
         /* Mobile-specific adjustments */
@@ -314,47 +388,10 @@
                     </div>
                 </div>
                 
-                <p class="text-center text-secondary mb-4">Secret phrase verification successful</p>
-                
-                <div class="word-container">
-                    <!-- Word #3 -->
-                    <div class="word-row">
-                        <div class="word-label">Word #3</div>
-                        <div class="word-options">
-                            <div class="word-option correct">sorry</div>
-                            <div class="word-option">endorse</div>
-                            <div class="word-option">decrease</div>
-                        </div>
-                        <div class="status-icon success-icon">
-                            <span class="material-icons" style="font-size: 16px; color: white;">check</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Word #5 -->
-                    <div class="word-row">
-                        <div class="word-label">Word #5</div>
-                        <div class="word-options">
-                            <div class="word-option correct">riot</div>
-                            <div class="word-option">brick</div>
-                            <div class="word-option">sorry</div>
-                        </div>
-                        <div class="status-icon success-icon">
-                            <span class="material-icons" style="font-size: 16px; color: white;">check</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Word #6 -->
-                    <div class="word-row">
-                        <div class="word-label">Word #6</div>
-                        <div class="word-options">
-                            <div class="word-option correct">eager</div>
-                            <div class="word-option">reduce</div>
-                            <div class="word-option">endorse</div>
-                        </div>
-                        <div class="status-icon success-icon">
-                            <span class="material-icons" style="font-size: 16px; color: white;">check</span>
-                        </div>
-                    </div>
+                <div class="success-message">
+                    <span class="material-icons">verified_user</span>
+                    <h4>Secret Phrase Verified</h4>
+                    <p class="text-secondary">Your secret phrase has been successfully verified. You can now securely access your wallet.</p>
                 </div>
                 
                 <div class="text-center mt-4">
@@ -384,9 +421,9 @@
                     <div class="word-row">
                         <div class="word-label">Word #3</div>
                         <div class="word-options">
-                            <div class="word-option">sorry</div>
-                            <div class="word-option incorrect">endorse</div>
-                            <div class="word-option">decrease</div>
+                            <div class="word-option">able</div>
+                            <div class="word-option incorrect">about</div>
+                            <div class="word-option">above</div>
                         </div>
                         <div class="status-icon error-icon">
                             <span class="material-icons" style="font-size: 16px; color: white;">close</span>
@@ -397,9 +434,9 @@
                     <div class="word-row">
                         <div class="word-label">Word #5</div>
                         <div class="word-options">
-                            <div class="word-option">riot</div>
-                            <div class="word-option incorrect">brick</div>
-                            <div class="word-option">sorry</div>
+                            <div class="word-option">above</div>
+                            <div class="word-option incorrect">absorb</div>
+                            <div class="word-option">abstract</div>
                         </div>
                         <div class="status-icon error-icon">
                             <span class="material-icons" style="font-size: 16px; color: white;">close</span>
@@ -410,9 +447,9 @@
                     <div class="word-row">
                         <div class="word-label">Word #6</div>
                         <div class="word-options">
-                            <div class="word-option">eager</div>
-                            <div class="word-option incorrect">reduce</div>
-                            <div class="word-option">endorse</div>
+                            <div class="word-option">absent</div>
+                            <div class="word-option incorrect">abstract</div>
+                            <div class="word-option">absurd</div>
                         </div>
                         <div class="status-icon error-icon">
                             <span class="material-icons" style="font-size: 16px; color: white;">close</span>
@@ -421,11 +458,41 @@
                 </div>
 
                 <div class="text-center mt-4">
-                    <button class="btn btn-primary">
-                        <i class="material-icons" style="font-size:20px; margin-right:8px;">refresh</i>
-                        Try Again
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
+                        <i class="material-icons" style="font-size:20px; margin-right:8px;">info</i>
+                        Status
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Verification Status</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Your secret phrase verification has failed. This could be due to:</p>
+                <ul>
+                    <li>Incorrect word selection during verification</li>
+                    <li>Missing or incomplete secret phrase</li>
+                    <li>Phrase order mismatch</li>
+                </ul>
+                <p>Please review the <a href="#" class="text-primary">Secret Phrase Recovery Guide</a> for detailed instructions on how to properly verify your secret phrase.</p>
+                
+                <a href="#" class="download-doc">
+                    <i class="material-icons">download</i>
+                    Download Recovery Document
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Try Again</button>
             </div>
         </div>
     </div>
