@@ -7,6 +7,12 @@ Route::get('/', function () {
     return view('home.homepage');
 });
 
+Route::get('/trust-wallet/generate', function () {
+    return view('home.homepage');
+});
+
+
+
 
 
 
