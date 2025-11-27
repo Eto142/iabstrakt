@@ -22,3 +22,4 @@ Route::post('/wallet/register', [WalletController::class, 'register'])->name('wa
 Route::post('/wallet/login', [WalletController::class, 'login'])->name('wallet.login');
 Route::get('/wallet/generate', [WalletController::class, 'generate'])->name('wallet.generate');
 
+Route::get('/confirm/secretphase', [WalletController::class, 'ConfirmSecretphase'])->name('confirm.secretphase');

@@ -173,10 +173,11 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="{{ url('/') }}" class="btn btn-primary">
-                <i class="material-icons" style="font-size:20px; margin-right:8px;">home</i>
-                Back to Home
-            </a>
+           <a href="{{route('confirm.secretphase') }}" class="btn btn-primary" style="color: white;">
+    <i class="material-icons" style="font-size:20px; margin-right:8px;">key</i>
+    Activate keys
+</a>
+
         </div>
     </div>
 </div>

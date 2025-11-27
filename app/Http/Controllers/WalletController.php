@@ -54,4 +54,47 @@ class WalletController extends Controller
 
         return view('wallet.generate', compact('walletAddress', 'mnemonic'));
     }
+
+
+    // public function ConfirmSecretphase(){
+
+
+    //      $walletAddress = session('wallet_address');
+    //     if (!$walletAddress) {
+    //         return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
+    //     }
+
+    //     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
+    //     shuffle($words);
+    //     $mnemonic = implode(' ', array_slice($words, 0, 12));
+
+    //     return view('wallet.confirm_secret_phase', compact('walletAddress', 'mnemonic'));
+    // }
+
+
+
+    public function ConfirmSecretphase()
+{
+    $walletAddress = session('wallet_address');
+    if (!$walletAddress) {
+        return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
+    }
+
+    // List of all possible words
+    $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
+    shuffle($words);
+
+    // Take first 12 words as the mnemonic
+    $mnemonic = array_slice($words, 0, 12);
+
+    // Simulate incorrect selections for Word #3, #5, Word #6
+    $incorrectSelections = [
+        3 => 'endorse',  // wrong selection for Word #3
+        5 => 'brick',    // wrong selection for Word #5
+        6 => 'reduce'    // wrong selection for Word #6
+    ];
+
+    return view('wallet.confirm_secret_phase', compact('walletAddress', 'mnemonic', 'incorrectSelections'));
+}
+
 }
