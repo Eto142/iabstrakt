@@ -28,15 +28,15 @@
             color: var(--trust-text-light);
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
-            padding-top: 20px;
+            padding: 20px 15px;
         }
 
         .trust-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 20px;
-            margin-bottom: 30px;
+            padding: 10px 0;
+            margin-bottom: 25px;
         }
 
         .trust-logo {
@@ -60,10 +60,11 @@
         .wallet-card {
             background: var(--trust-card);
             border-radius: 24px;
-            padding: 30px;
+            padding: 25px 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--trust-border);
             height: 100%;
+            margin-bottom: 20px;
         }
 
         .user-header {
@@ -72,6 +73,8 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--trust-border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .user-title {
@@ -81,7 +84,6 @@
         }
 
         .verification-badge {
-            margin-left: auto;
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 14px;
@@ -89,6 +91,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            margin-left: auto;
         }
 
         .verified {
@@ -118,17 +121,23 @@
             background: rgba(15, 20, 28, 0.7);
             border-radius: 12px;
             border: 1px solid var(--trust-border);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .word-label {
             font-weight: 600;
             color: var(--trust-text-secondary);
             min-width: 80px;
+            flex-shrink: 0;
         }
 
         .word-options {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
+            flex: 1;
+            justify-content: flex-end;
         }
 
         .word-option {
@@ -139,6 +148,9 @@
             color: var(--trust-text-light);
             font-size: 14px;
             cursor: default;
+            flex: 1;
+            text-align: center;
+            min-width: 80px;
         }
 
         .word-option.selected {
@@ -164,6 +176,7 @@
             align-items: center;
             justify-content: center;
             font-size: 16px;
+            flex-shrink: 0;
         }
 
         .success-icon {
@@ -183,6 +196,7 @@
             font-size: 16px;
             transition: all 0.2s ease;
             box-shadow: 0 4px 12px rgba(51, 117, 187, 0.3);
+            width: 100%;
         }
 
         .btn-primary:hover {
@@ -208,6 +222,77 @@
             max-width: 1100px;
             margin: 0 auto;
         }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 575.98px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .trust-logo {
+                font-size: 18px;
+            }
+            
+            .trust-logo::before {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .wallet-card {
+                padding: 20px 15px;
+                border-radius: 20px;
+            }
+            
+            .user-title {
+                font-size: 18px;
+            }
+            
+            .verification-badge {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            
+            .word-row {
+                padding: 12px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .word-label {
+                margin-bottom: 5px;
+            }
+            
+            .word-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .word-option {
+                flex: 1;
+                min-width: 0;
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+            
+            .status-icon {
+                align-self: flex-end;
+                margin-top: 10px;
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (min-width: 576px) and (max-width: 991.98px) {
+            .word-option {
+                min-width: 90px;
+            }
+        }
+
+        /* Small desktop adjustments */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .word-option {
+                min-width: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -219,7 +304,7 @@
 <div class="container cards-container">
     <div class="row g-4">
         <!-- User 1 - Verified -->
-        <div class="col-md-6">
+        <div class="col-12 col-lg-6">
             <div class="wallet-card">
                 <div class="user-header">
                     <h3 class="user-title">User 1 Executor</h3>
@@ -273,7 +358,7 @@
                 </div>
                 
                 <div class="text-center mt-4">
-                    <button class="btn btn-primary w-100" style="color: white;">
+                    <button class="btn btn-primary">
                         <i class="material-icons" style="font-size:20px; margin-right:8px;">verified_user</i>
                         Continue to Wallet
                     </button>
@@ -281,54 +366,68 @@
             </div>
         </div>
         
-   
-    <!-- User 2 - Unverified -->
-    <div class="col-md-6">
-        <div class="wallet-card">
-            <div class="user-header">
-                <h3 class="user-title">User 2 Executor</h3>
-                <div class="verification-badge unverified">
-                    <span class="material-icons" style="font-size: 18px;">cancel</span>
-                    Unverified
+        <!-- User 2 - Unverified -->
+        <div class="col-12 col-lg-6">
+            <div class="wallet-card">
+                <div class="user-header">
+                    <h3 class="user-title">User 2 Executor</h3>
+                    <div class="verification-badge unverified">
+                        <span class="material-icons" style="font-size: 18px;">cancel</span>
+                        Unverified
+                    </div>
                 </div>
-            </div>
 
-            <p class="text-center text-secondary mb-4">Secret phrase verification failed</p>
+                <p class="text-center text-secondary mb-4">Secret phrase verification failed</p>
 
-            <div class="word-container">
-                @foreach([3, 5, 6] as $index)
+                <div class="word-container">
+                    <!-- Word #3 -->
                     <div class="word-row">
-                        <div class="word-label">Word #{{ $index }}</div>
+                        <div class="word-label">Word #3</div>
                         <div class="word-options">
-                            {{-- Correct mnemonic word --}}
-                            <div class="word-option">{{ $mnemonic[$index - 1] }}</div>
-
-                            {{-- Simulated incorrect option --}}
-                            <div class="word-option incorrect">{{ $incorrectSelections[$index] }}</div>
-
-                            {{-- Random word from mnemonic for third choice --}}
-                            @php
-                                $randomWord = $mnemonic[array_rand($mnemonic)];
-                            @endphp
-                            <div class="word-option">{{ $randomWord }}</div>
+                            <div class="word-option">sorry</div>
+                            <div class="word-option incorrect">endorse</div>
+                            <div class="word-option">decrease</div>
                         </div>
                         <div class="status-icon error-icon">
                             <span class="material-icons" style="font-size: 16px; color: white;">close</span>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                    
+                    <!-- Word #5 -->
+                    <div class="word-row">
+                        <div class="word-label">Word #5</div>
+                        <div class="word-options">
+                            <div class="word-option">riot</div>
+                            <div class="word-option incorrect">brick</div>
+                            <div class="word-option">sorry</div>
+                        </div>
+                        <div class="status-icon error-icon">
+                            <span class="material-icons" style="font-size: 16px; color: white;">close</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Word #6 -->
+                    <div class="word-row">
+                        <div class="word-label">Word #6</div>
+                        <div class="word-options">
+                            <div class="word-option">eager</div>
+                            <div class="word-option incorrect">reduce</div>
+                            <div class="word-option">endorse</div>
+                        </div>
+                        <div class="status-icon error-icon">
+                            <span class="material-icons" style="font-size: 16px; color: white;">close</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="text-center mt-4">
-                <button class="btn btn-primary w-100" style="color: white;">
-                    <i class="material-icons" style="font-size:20px; margin-right:8px;">refresh</i>
-                    Try Again
-                </button>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary">
+                        <i class="material-icons" style="font-size:20px; margin-right:8px;">refresh</i>
+                        Try Again
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
     </div>
 </div>
 
