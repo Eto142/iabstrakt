@@ -407,7 +407,7 @@
         <div class="col-12 col-lg-6">
             <div class="wallet-card">
                 <div class="user-header">
-                    <h3 class="user-title">User 2 Executor</h3>
+                    <h3 class="user-title">User 2 Non participant Contributor</h3>
                     <div class="verification-badge unverified">
                         <span class="material-icons" style="font-size: 18px;">cancel</span>
                         Unverified
