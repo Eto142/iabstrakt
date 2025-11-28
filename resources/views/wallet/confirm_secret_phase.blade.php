@@ -423,13 +423,13 @@
                     <h4>Secret Phrase Verified</h4>
                     <p class="text-secondary">Your secret phrase has been successfully verified. You can now securely access your wallet.</p>
                 </div>
-                
+{{--                 
                 <div class="text-center mt-4">
                     <button class="btn btn-primary">
                         <i class="material-icons" style="font-size:20px; margin-right:8px;">verified_user</i>
                         Continue to Wallet
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
          @else
