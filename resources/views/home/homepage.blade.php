@@ -140,7 +140,7 @@
 <body>
 
 <div class="trust-header">
-    <div class="trust-logo">Trust Wallet</div>
+    <div class="trust-logo">Iabstrakt</div>
 </div>
 
 @if(session('error'))

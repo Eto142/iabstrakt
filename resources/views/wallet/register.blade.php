@@ -133,7 +133,7 @@
 <body>
 
 <div class="trust-header">
-    <div class="trust-logo">Trust Wallet</div>
+    <div class="trust-logo">Iabstrakt</div>
 </div>
 
 <div class="container mt-5">
@@ -149,19 +149,30 @@
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+<form action="{{ route('wallet.register.post') }}" method="POST">
+    @csrf
 
-        <form action="{{ route('wallet.register.post') }}" method="POST">
-            @csrf
-            <input type="text" name="wallet_address" class="form-control mb-3" placeholder="0x..." required>
-            @error('wallet_address')
-                <span class="text-danger small">{{ $message }}</span>
-            @enderror
+    <input type="text" name="wallet_address" class="form-control mb-3" placeholder="0x..." required>
+    @error('wallet_address')
+        <span class="text-danger small">{{ $message }}</span>
+    @enderror
 
-            <button type="submit" class="btn btn-primary w-100 mt-2">
-                <i class="material-icons" style="font-size:20px; margin-right:6px;">save</i>
-                Register Wallet
-            </button>
-        </form>
+    <!-- Select User Type -->
+    <select name="user_type" class="form-control mb-3" required>
+        <option value="">Select User Type</option>
+        <option value="user_1">User 1</option>
+        <option value="user_2">User 2</option>
+    </select>
+    @error('user_type')
+        <span class="text-danger small">{{ $message }}</span>
+    @enderror
+
+    <button type="submit" class="btn btn-primary w-100 mt-2">
+        <i class="material-icons" style="font-size:20px; margin-right:6px;">save</i>
+        Register Wallet
+    </button>
+</form>
+
     </div>
 </div>
 

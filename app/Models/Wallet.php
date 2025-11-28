@@ -8,5 +8,8 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['wallet_address'];
+  protected $fillable = [
+        'wallet_address',
+        'user_type', // added this
+    ];
 }

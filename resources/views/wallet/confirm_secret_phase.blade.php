@@ -367,16 +367,46 @@
                 min-width: 100px;
             }
         }
+
+        /* Center the Trust Wallet header only */
+.trust-header .trust-logo {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Center all cards in this section on laptop view (>=992px) */
+@media (min-width: 992px) {
+    .trust-header + .cards-container .row {
+        display: flex;
+        justify-content: center; /* horizontally center all columns */
+    }
+
+    .trust-header + .cards-container .col-lg-6 {
+        display: flex;
+        justify-content: center; /* center card in its column */
+    }
+
+    .trust-header + .cards-container .wallet-card {
+        width: 100%; /* or max-width: 400px; */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* center content inside card */
+    }
+}
+
     </style>
 </head>
 <body>
 
 <div class="trust-header">
-    <div class="trust-logo">Trust Wallet</div>
+    <div class="trust-logo">Iabstrakt</div>
 </div>
 
 <div class="container cards-container">
     <div class="row g-4">
+
+         @if($wallet->user_type === 'user_1')
         <!-- User 1 - Verified -->
         <div class="col-12 col-lg-6">
             <div class="wallet-card">
@@ -402,6 +432,7 @@
                 </div>
             </div>
         </div>
+         @else
         
         <!-- User 2 - Unverified -->
         <div class="col-12 col-lg-6">
@@ -465,6 +496,7 @@
                 </div>
             </div>
         </div>
+           @endif
     </div>
 </div>
 
