@@ -11,5 +11,7 @@ class Wallet extends Model
   protected $fillable = [
         'wallet_address',
         'user_type', // added this
+        'mnemonic',      // <-- add this
+        'user2_words',   // <-- and this
     ];
 }

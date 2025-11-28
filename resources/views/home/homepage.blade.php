@@ -1,3 +1,5 @@
+@include('home.header')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,6 +140,7 @@
     </style>
 </head>
 <body>
+    
 
 <div class="trust-header">
     <div class="trust-logo">Iabstrakt</div>
@@ -221,6 +224,8 @@ function saveWallet() {
     bootstrap.Modal.getInstance(document.getElementById('addressModal')).hide();
 }
 </script>
+
+
 
 </body>
 </html>

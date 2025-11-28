@@ -60,6 +60,9 @@ public function register(Request $request)
 
 
 
+
+
+
     public function generate()
 {
     $walletAddress = session('wallet_address');
@@ -68,67 +71,112 @@ public function register(Request $request)
     }
 
     // Word list
-    // $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
     $words = explode(' ', 'abandon ability able about above absent');
     shuffle($words);
 
-    // Generate 12-word mnemonic
+    // Generate 6-word mnemonic
     $mnemonicWords = array_slice($words, 0, 6);
 
-    // Split into two groups: User 1 = first 6, User 2 = next 6
-    $user1_words = array_slice($mnemonicWords, 0, 6);
-    $user2_words = array_slice($mnemonicWords, 6, 6);
-
-    // Convert full mnemonic to string
+    // Convert to full string
     $mnemonic = implode(' ', $mnemonicWords);
 
-    return view('wallet.generate', compact('walletAddress', 'mnemonic', 'user1_words', 'user2_words'));
+    // Save to DB as user2 words
+    Wallet::updateOrCreate(
+        ['wallet_address' => $walletAddress],
+        [
+            'mnemonic'     => $mnemonic,
+            'user2_words'  => $mnemonic,   // <-- save here
+        ]
+    );
+
+    return view('wallet.generate', compact('walletAddress', 'mnemonic', 'mnemonicWords'));
 }
 
 
 
+// public function ConfirmSecretphase()
+// {
+//     $walletAddress = session('wallet_address');
+//     if (!$walletAddress) {
+//         return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
+//     }
 
-    // public function ConfirmSecretphase(){
+//     // Fetch the wallet record
+//     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
 
+//     // List of all possible words
+//     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
+//     shuffle($words);
 
-    //      $walletAddress = session('wallet_address');
-    //     if (!$walletAddress) {
-    //         return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
-    //     }
+//     // Take first 12 words as the mnemonic
+//     $mnemonic = array_slice($words, 0, 12);
 
-    //     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
-    //     shuffle($words);
-    //     $mnemonic = implode(' ', array_slice($words, 0, 12));
+//     // Simulate incorrect selections for Word #3, #5, Word #6
+//     $incorrectSelections = [
+//         3 => 'endorse',  // wrong selection for Word #3
+//         5 => 'brick',    // wrong selection for Word #5
+//         6 => 'reduce'    // wrong selection for Word #6
+//     ];
 
-    //     return view('wallet.confirm_secret_phase', compact('walletAddress', 'mnemonic'));
-    // }
+//     return view('wallet.confirm_secret_phase', compact('walletAddress', 'wallet', 'mnemonic', 'incorrectSelections'));
+// }
+
 
 
 public function ConfirmSecretphase()
 {
     $walletAddress = session('wallet_address');
+
     if (!$walletAddress) {
-        return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
+        return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
     }
 
-    // Fetch the wallet record
+    // Fetch saved wallet record
     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
 
-    // List of all possible words
-    $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
-    shuffle($words);
+    // Saved 6-word correct phrase
+    $correctWords = explode(' ', $wallet->user2_words);
 
-    // Take first 12 words as the mnemonic
-    $mnemonic = array_slice($words, 0, 12);
+    // Shuffle for user to arrange
+    $shuffledWords = $correctWords;
+    shuffle($shuffledWords);
 
-    // Simulate incorrect selections for Word #3, #5, Word #6
-    $incorrectSelections = [
-        3 => 'endorse',  // wrong selection for Word #3
-        5 => 'brick',    // wrong selection for Word #5
-        6 => 'reduce'    // wrong selection for Word #6
-    ];
+    return view('wallet.confirm_secret_phase', compact('wallet', 'correctWords', 'shuffledWords'));
+}
 
-    return view('wallet.confirm_secret_phase', compact('walletAddress', 'wallet', 'mnemonic', 'incorrectSelections'));
+
+
+public function ConfirmSecretphaseSubmit(Request $request)
+{
+    $walletAddress = session('wallet_address');
+
+    if (!$walletAddress) {
+        return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
+    }
+
+    // Fetch saved wallet
+    $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
+
+    // Convert saved phrase to array
+    $correctWords = explode(' ', $wallet->user2_words);
+
+    // User submitted words (array from form)
+    $submittedWords = $request->input('words');
+
+    if (!$submittedWords) {
+        return redirect()->back()->withErrors('Please arrange all the words.');
+    }
+
+    // Compare arrays
+    if ($submittedWords !== $correctWords) {
+        return redirect()->back()->withErrors('Incorrect phrase arrangement. Please try again.');
+    }
+
+    // MARK USER AS VERIFIED
+    $wallet->user_type = 'user_2_verified';
+    $wallet->save();
+
+    return redirect()->route('wallet.verified')->with('success', 'Wallet successfully verified!');
 }
 
 
