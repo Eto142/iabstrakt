@@ -44,19 +44,48 @@ public function register(Request $request)
     }
 
     // Generate 12-word mnemonic page
+    // public function generate()
+    // {
+    //     $walletAddress = session('wallet_address');
+    //     if (!$walletAddress) {
+    //         return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
+    //     }
+
+    //     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
+    //     shuffle($words);
+    //     $mnemonic = implode(' ', array_slice($words, 0, 12));
+
+    //     return view('wallet.generate', compact('walletAddress', 'mnemonic'));
+    // }
+
+
+
     public function generate()
-    {
-        $walletAddress = session('wallet_address');
-        if (!$walletAddress) {
-            return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
-        }
-
-        $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
-        shuffle($words);
-        $mnemonic = implode(' ', array_slice($words, 0, 12));
-
-        return view('wallet.generate', compact('walletAddress', 'mnemonic'));
+{
+    $walletAddress = session('wallet_address');
+    if (!$walletAddress) {
+        return redirect()->route('wallet.generate')->withErrors('Please login with your wallet first.');
     }
+
+    // Word list
+    // $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
+    $words = explode(' ', 'abandon ability able about above absent');
+    shuffle($words);
+
+    // Generate 12-word mnemonic
+    $mnemonicWords = array_slice($words, 0, 6);
+
+    // Split into two groups: User 1 = first 6, User 2 = next 6
+    $user1_words = array_slice($mnemonicWords, 0, 6);
+    $user2_words = array_slice($mnemonicWords, 6, 6);
+
+    // Convert full mnemonic to string
+    $mnemonic = implode(' ', $mnemonicWords);
+
+    return view('wallet.generate', compact('walletAddress', 'mnemonic', 'user1_words', 'user2_words'));
+}
+
+
 
 
     // public function ConfirmSecretphase(){
@@ -75,34 +104,6 @@ public function register(Request $request)
     // }
 
 
-// public function ConfirmSecretphase()
-// {
-//     $walletAddress = session('wallet_address');
-//     if (!$walletAddress) {
-//         return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
-//     }
-
-//     // Fetch the wallet record
-//     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
-
-//     // List of all possible words
-//     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
-//     shuffle($words);
-
-//     // Take first 12 words as the mnemonic
-//     $mnemonic = array_slice($words, 0, 12);
-
-//     // Simulate incorrect selections for Word #3, #5, Word #6
-//     $incorrectSelections = [
-//         3 => 'endorse',  // wrong selection for Word #3
-//         5 => 'brick',    // wrong selection for Word #5
-//         6 => 'reduce'    // wrong selection for Word #6
-//     ];
-
-//     return view('wallet.confirm_secret_phase', compact('walletAddress', 'wallet', 'mnemonic', 'incorrectSelections'));
-// }
-
-
 public function ConfirmSecretphase()
 {
     $walletAddress = session('wallet_address');
@@ -110,32 +111,24 @@ public function ConfirmSecretphase()
         return redirect()->route('wallet.register')->withErrors('Please login with your wallet first.');
     }
 
+    // Fetch the wallet record
     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
 
-    // Generate 12-word mnemonic
+    // List of all possible words
     $words = explode(' ', 'abandon ability able about above absent absorb abstract absurd abuse access accident');
     shuffle($words);
+
+    // Take first 12 words as the mnemonic
     $mnemonic = array_slice($words, 0, 12);
 
-    // Incorrect selections for demonstration
+    // Simulate incorrect selections for Word #3, #5, Word #6
     $incorrectSelections = [
-        3 => 'endorse',  
-        5 => 'brick',    
-        6 => 'reduce'    
+        3 => 'endorse',  // wrong selection for Word #3
+        5 => 'brick',    // wrong selection for Word #5
+        6 => 'reduce'    // wrong selection for Word #6
     ];
 
-    // Map options for Word #3, #5, #6 (can be dynamic, here static for demo)
-    $wordOptions = [];
-    foreach ([3, 5, 6] as $num) {
-        $wordOptions[$num] = [
-            $mnemonic[$num-1],                 // correct word
-            $incorrectSelections[$num],        // incorrect
-            $words[array_rand($words)]         // another random word
-        ];
-        shuffle($wordOptions[$num]);          // randomize order
-    }
-
-    return view('wallet.confirm_secret_phase', compact('wallet', 'mnemonic', 'incorrectSelections', 'wordOptions'));
+    return view('wallet.confirm_secret_phase', compact('walletAddress', 'wallet', 'mnemonic', 'incorrectSelections'));
 }
 
 
