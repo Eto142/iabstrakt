@@ -165,13 +165,16 @@
         <h3 class="text-center mb-3">Your 12-Word Mnemonic Phrase</h3>
         <p class="text-center text-secondary">Keep it safe. This is your wallet recovery phrase.</p>
 
-       <div class="key-box mt-4">
-    <span id="mnemonicText">{{ $mnemonic }}</span>
-
-    <button class="copy-btn" onclick="copyMnemonic()">
+      <div class="key-box mt-4" style="position: relative;">
+    <button class="copy-btn" onclick="copyMnemonic()" style="top: 10px; right: 10px;">
         <i class="material-icons" style="font-size:18px;">content_copy</i>
     </button>
+
+    <span id="mnemonicText" style="display: block; margin-top: 40px;">
+        {{ $mnemonic }}
+    </span>
 </div>
+
 
 
         <div class="text-center mt-4">
