@@ -165,13 +165,14 @@
         <h3 class="text-center mb-3">Your 12-Word Mnemonic Phrase</h3>
         <p class="text-center text-secondary">Keep it safe. This is your wallet recovery phrase.</p>
 
-        <div class="key-box mt-4" id="mnemonicBox">
-            {{ $mnemonic }}
+       <div class="key-box mt-4">
+    <span id="mnemonicText">{{ $mnemonic }}</span>
 
-            <button class="copy-btn" onclick="copyMnemonic()">
-                <i class="material-icons" style="font-size:18px;"></i>
-            </button>
-        </div>
+    <button class="copy-btn" onclick="copyMnemonic()">
+        <i class="material-icons" style="font-size:18px;">content_copy</i>
+    </button>
+</div>
+
 
         <div class="text-center mt-4">
            <a href="{{route('confirm.secretphase') }}" class="btn btn-primary" style="color: white;">
@@ -188,7 +189,7 @@
 
 <script>
 function copyMnemonic() {
-    const text = document.getElementById("mnemonicBox").innerText.trim();
+    const text = document.getElementById("mnemonicText").innerText.trim();
 
     navigator.clipboard.writeText(text).then(() => {
         showToast();
@@ -203,6 +204,7 @@ function showToast() {
         toast.classList.remove("toast-show");
     }, 2000);
 }
+
 </script>
 
 </body>
