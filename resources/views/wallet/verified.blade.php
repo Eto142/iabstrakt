@@ -249,9 +249,23 @@ body {
             <div class="status-text">
                 Fix/Troubleshooting:
                 <ul class="mt-1 ps-3 mb-0">
-                    <li>• <a href="#" class="text-primary">Review Contract Terms, Signatories & Obligations</a></li>
-                    <li>• <a href="#" class="download-doc"><i class="material-icons">download</i> Download PDF Documentation</a></li>
-                </ul>
+    <li>
+        <a href="{{ asset('Royalty_Share_Agreement_and_obligations2.pdf') }}" 
+           class="text-primary" 
+           download>
+            Review Contract Terms, Signatories & Obligations
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ asset('Royalty_Share_Agreement_and_obligations2.pdf') }}" 
+           class="download-doc" 
+           download>
+            <i class="material-icons">download</i> Download PDF Documentation
+        </a>
+    </li>
+</ul>
+
             </div>
         </div>
 
