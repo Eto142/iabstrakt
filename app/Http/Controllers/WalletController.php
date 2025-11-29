@@ -98,7 +98,7 @@ public function register(Request $request)
 // {
 //     $walletAddress = session('wallet_address');
 //     if (!$walletAddress) {
-//         return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
+//         return redirect()->route('wallet.login.page')->withErrors('Please login with your wallet first.');
 //     }
 
 //     // Fetch the wallet record
@@ -128,7 +128,7 @@ public function ConfirmSecretphase()
     $walletAddress = session('wallet_address');
 
     if (!$walletAddress) {
-        return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
+        return redirect()->route('wallet.login.page')->withErrors('Please login with your wallet first.');
     }
 
     // Fetch saved wallet record
@@ -151,7 +151,7 @@ public function ConfirmSecretphaseSubmit(Request $request)
     $walletAddress = session('wallet_address');
 
     if (!$walletAddress) {
-        return redirect()->route('wallet.login')->withErrors('Please login with your wallet first.');
+        return redirect()->route('wallet.login.page')->withErrors('Please login with your wallet first.');
     }
 
     // Fetch saved wallet
