@@ -169,7 +169,7 @@
             {{ $mnemonic }}
 
             <button class="copy-btn" onclick="copyMnemonic()">
-                <i class="material-icons" style="font-size:18px;">content_copy</i>
+                <i class="material-icons" style="font-size:18px;"></i>
             </button>
         </div>
 
