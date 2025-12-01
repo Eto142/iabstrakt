@@ -566,8 +566,16 @@
                         <li>Be cautious of phishing attempts</li>
                     </ul>
                 </div>
+
+                <br>
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#statusModal">
+        <i class="material-icons me-2">info</i>View Status Details
+    </button>
             </div>
+            
         </div>
+
+       
         @else
         
         <!-- User 2 - Unverified -->
@@ -738,3 +746,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
+
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">
+          <i class="material-icons me-2">info</i>Status Update
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Status 1 -->
+        <div class="status-item mb-3">
+          <div class="status-icon status-success"><i class="material-icons">check_circle</i></div>
+          <div class="status-text">
+            <strong>Status:</strong>  
+            The process is now <span class="text-success">redirecting to Trust Wallet</span> awaiting User 2, contributor.
+          </div>
+        </div>
+
+        <!-- Status 2 -->
+        <div class="status-item mb-3">
+          <div class="status-icon status-warning"><i class="material-icons">hourglass_empty</i></div>
+          <div class="status-text">
+            <strong>Instruction:</strong>  
+            Keep a clean communication and keep the process kicking started.
+          </div>
+        </div>
+
+        <!-- Status 3 -->
+        <div class="status-item">
+          <div class="status-icon status-error"><i class="material-icons">warning</i></div>
+          <div class="status-text">
+            <strong>Note:</strong><br>
+            Only <span class="text-danger fw-bold">6 of the 12 recovery phrases</span> are currently activated.<br>
+            Step to the next level accordingly.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Proceed</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
