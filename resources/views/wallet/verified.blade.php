@@ -188,6 +188,12 @@ body {
 
 .download-doc:hover { text-decoration: underline; }
 
+.status-extra {
+    background: rgba(20, 26, 36, 0.85);
+    border: 1px solid rgba(66, 75, 95, 0.4);
+}
+
+
 </style>
 </head>
 <body>
@@ -268,20 +274,27 @@ body {
 
             </div>
 
-            <!-- Beneath Fix/Troubleshooting -->
-<div class="mt-3 p-3 rounded" style="background:#f8f9fb; border-left:4px solid #dc3545;">
+        </div>
 
-    <h5 class="mb-2" style="font-weight:600;">Countdown Timer ⏲</h5>
-    <p class="mb-1">This link will automatically deactivate after:</p>
+        <!-- Beneath Fix/Troubleshooting -->
+<div class="status-extra mt-3 p-3 rounded-3">
+    <div class="d-flex align-items-center mb-2">
+        <span class="material-icons me-2" style="font-size:22px; color:#ef4444;">timer</span>
+        <h6 class="m-0" style="color:#ef4444; font-weight:600;">Countdown Timer</h6>
+    </div>
 
-    <div id="countdown" style="font-size:1.4rem; font-weight:700; color:#dc3545;"></div>
+    <p class="mb-1 text-secondary">This link will automatically deactivate in:</p>
 
-    <p class="mt-3 mb-0">
-        <strong>⚠ Link Generator Status:</strong> <span style="color:#dc3545;">Active — Will deactivate when timer ends</span>
-    </p>
+    <div id="countdown"
+         style="font-size:1.5rem; font-weight:700; color:#ef4444; letter-spacing:1px;">
+    </div>
+
+    <div class="mt-3 p-2 rounded-2" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3);">
+        <strong style="color:#ef4444;">⚠ Link Generator Status:</strong>
+        <span class="text-secondary">Active — Will deactivate when timer reaches 00:00</span>
+    </div>
 </div>
 
-        </div>
 
       </div>
       <div class="modal-footer">
