@@ -267,6 +267,20 @@ body {
 </ul>
 
             </div>
+
+            <!-- Beneath Fix/Troubleshooting -->
+<div class="mt-3 p-3 rounded" style="background:#f8f9fb; border-left:4px solid #dc3545;">
+
+    <h5 class="mb-2" style="font-weight:600;">Countdown Timer ⏲</h5>
+    <p class="mb-1">This link will automatically deactivate after:</p>
+
+    <div id="countdown" style="font-size:1.4rem; font-weight:700; color:#dc3545;"></div>
+
+    <p class="mt-3 mb-0">
+        <strong>⚠ Link Generator Status:</strong> <span style="color:#dc3545;">Active — Will deactivate when timer ends</span>
+    </p>
+</div>
+
         </div>
 
       </div>
@@ -279,5 +293,37 @@ body {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Set countdown for 48 hours from now
+    let countDownTime = new Date().getTime() + (48 * 60 * 60 * 1000);
+
+    let timer = setInterval(function () {
+
+        let now = new Date().getTime();
+        let distance = countDownTime - now;
+
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+            hours + "h " + minutes + "m " + seconds + "s";
+
+        // When finished
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("countdown").innerHTML = "Link Deactivated";
+
+            // Optionally disable link here
+            let links = document.querySelectorAll("a");
+            links.forEach(link => {
+                link.style.pointerEvents = "none";
+                link.style.opacity = "0.5";
+            });
+        }
+    }, 1000);
+</script>
+
 </body>
 </html>
