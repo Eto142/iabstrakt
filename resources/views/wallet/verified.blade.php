@@ -291,7 +291,7 @@ body {
 
     <div class="mt-3 p-2 rounded-2" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3);">
         <strong style="color:#ef4444;">⚠ Link Generator Status:</strong>
-        <span class="text-secondary">Active — Will deactivate when timer reaches 00:00</span>
+        <span class="text-secondary">Active Will deactivate when timer reaches 00:00</span>
     </div>
 </div>
 
