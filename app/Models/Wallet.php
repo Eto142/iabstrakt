@@ -9,9 +9,12 @@ class Wallet extends Model
     use HasFactory;
 
   protected $fillable = [
-        'wallet_address',
-        'user_type', // added this
-        'mnemonic',      // <-- add this
-        'user2_words',   // <-- and this
-    ];
+    'wallet_address',
+    'user_type',
+    'mnemonic',
+    'user2_words',
+    'link_expires_at',
+    'user_status',
+];
+
 }

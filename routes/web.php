@@ -37,7 +37,13 @@ Route::get('/wallet/confirm-secret-phase', [App\Http\Controllers\WalletControlle
 Route::post('/wallet/confirm-secret-phase', [App\Http\Controllers\WalletController::class, 'ConfirmSecretphaseSubmit'])
     ->name('wallet.confirm_phase.submit');
 
-// Verified page redirect
-Route::get('/wallet/verified', function () {
-    return view('wallet.verified');
-})->name('wallet.verified');
+// // Verified page redirect
+// Route::get('/wallet/verified', function () {
+//     return view('wallet.verified');
+// })->name('wallet.verified');
+
+
+// Route::get('/wallet/verified', [WalletController::class, 'verified'])->name('user.wallet.verified');
+
+
+Route::get('/wallet/verified', [WalletController::class, 'verified'])->name('wallet.verified');

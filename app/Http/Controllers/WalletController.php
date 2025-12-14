@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Wallet;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WalletController extends Controller
 {
@@ -31,17 +34,36 @@ public function register(Request $request)
 
 
     // Show login modal processing
-    public function login(Request $request)
-    {
-        $request->validate([
-            'wallet_address' => 'required|string|exists:wallets,wallet_address',
-        ]);
+   public function login(Request $request)
+{
+    $request->validate([
+        'wallet_address' => 'required|string|exists:wallets,wallet_address',
+    ]);
 
-        // Store wallet in session for next step
-        session(['wallet_address' => $request->wallet_address]);
+    $wallet = Wallet::where('wallet_address', $request->wallet_address)->firstOrFail();
 
-        return redirect()->route('wallet.generate');
+    // 🔒 AUTO-EXPIRE LINK IF TIME HAS PASSED
+    if (
+        $wallet->user_status === 0 &&
+        $wallet->link_expires_at &&
+        now()->greaterThan($wallet->link_expires_at)
+    ) {
+        $wallet->update(['user_status' => 1]);
     }
+
+    // 🚫 BLOCK ACCESS IF LINK IS DEACTIVATED
+    if ($wallet->user_status === 1) {
+        return back()->withErrors([
+            'wallet_address' => 'This link has been deactivated. Please generate a new one.',
+        ]);
+    }
+
+    // ✅ LINK IS STILL ACTIVE → PROCEED
+    session(['wallet_address' => $wallet->wallet_address]);
+
+    return redirect()->route('wallet.generate');
+}
+
 
     // Generate 12-word mnemonic page
     // public function generate()
@@ -146,38 +168,195 @@ public function ConfirmSecretphase()
 
 
 
+// public function ConfirmSecretphaseSubmit(Request $request)
+// {
+//     $walletAddress = session('wallet_address');
+
+//     if (!$walletAddress) {
+//         return redirect()->route('wallet.login.page')->withErrors('Please login with your wallet first.');
+//     }
+
+//     // Fetch saved wallet
+//     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
+
+//     // Convert saved phrase to array
+//     $correctWords = explode(' ', $wallet->user2_words);
+
+//     // User submitted words (array from form)
+//     $submittedWords = $request->input('words');
+
+//     if (!$submittedWords) {
+//         return redirect()->back()->withErrors('Please arrange all the words.');
+//     }
+
+//     // Compare arrays
+//     if ($submittedWords !== $correctWords) {
+//         return redirect()->back()->withErrors('Incorrect phrase arrangement. Please try again.');
+//     }
+
+//     // MARK USER AS VERIFIED
+//     $wallet->user_type = 'user_2_verified';
+//     $wallet->save();
+
+//     return redirect()->route('wallet.verified')->with('success', 'Wallet successfully verified!');
+// }
+
+
+
+
+
+// public function ConfirmSecretphaseSubmit(Request $request)
+// {
+//     $walletAddress = session('wallet_address');
+
+//     if (!$walletAddress) {
+//         return redirect()->route('wallet.login.page')
+//             ->withErrors('Please login with your wallet first.');
+//     }
+
+//     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
+
+//     $correctWords = explode(' ', $wallet->user2_words);
+//     $submittedWords = $request->input('words');
+
+//     if (!$submittedWords) {
+//         return redirect()->back()
+//             ->withErrors('Please arrange all the words.');
+//     }
+
+//     if ($submittedWords !== $correctWords) {
+//         return redirect()->back()
+//             ->withErrors('Incorrect phrase arrangement. Please try again.');
+//     }
+
+//     // ✅ Verify wallet
+//     $wallet->user_type = 'user_2_verified';
+
+//     // ✅ START 24-HOUR REAL TIMER (ONLY ONCE)
+//     if (!$wallet->link_expires_at) {
+//         $wallet->link_expires_at = Carbon::now()->addHours(24);
+//         $wallet->user_status = 0; // active
+//     }
+
+//     $wallet->save();
+
+//     return redirect()
+//         ->route('user.wallet.verified')
+//         ->with('success', 'Wallet successfully verified!');
+// }
+
+
+
+
+
 public function ConfirmSecretphaseSubmit(Request $request)
 {
     $walletAddress = session('wallet_address');
 
     if (!$walletAddress) {
-        return redirect()->route('wallet.login.page')->withErrors('Please login with your wallet first.');
+        return redirect()->route('wallet.login.page')
+            ->withErrors('Please login with your wallet first.');
     }
 
-    // Fetch saved wallet
     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
 
-    // Convert saved phrase to array
     $correctWords = explode(' ', $wallet->user2_words);
-
-    // User submitted words (array from form)
     $submittedWords = $request->input('words');
 
     if (!$submittedWords) {
-        return redirect()->back()->withErrors('Please arrange all the words.');
+        return redirect()->back()
+            ->withErrors('Please arrange all the words.');
     }
 
-    // Compare arrays
     if ($submittedWords !== $correctWords) {
-        return redirect()->back()->withErrors('Incorrect phrase arrangement. Please try again.');
+        return redirect()->back()
+            ->withErrors('Incorrect phrase arrangement. Please try again.');
     }
 
-    // MARK USER AS VERIFIED
+    // ✅ Verify wallet
     $wallet->user_type = 'user_2_verified';
+
+    // ✅ Set 24-hour timer if not already set
+    if (!$wallet->link_expires_at) {
+        $wallet->link_expires_at = Carbon::now()->addHours(24);
+        $wallet->user_status = 0; // active
+    }
+
     $wallet->save();
 
-    return redirect()->route('wallet.verified')->with('success', 'Wallet successfully verified!');
+    // Redirect to verified page
+    return redirect()->route('wallet.verified');
 }
+
+
+
+
+public function verified()
+{
+    $walletAddress = session('wallet_address');
+    if (!$walletAddress) {
+        return redirect()->route('wallet.login.page');
+    }
+
+    $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
+
+    // Update status if expired
+    if ($wallet->link_expires_at && now()->greaterThan($wallet->link_expires_at)) {
+        $wallet->update(['user_status' => 1]);
+    }
+
+   return view('wallet.verified', [
+    'wallet' => $wallet,
+   'expiresAt' => $wallet->link_expires_at 
+                ? \Carbon\Carbon::parse($wallet->link_expires_at)->timestamp * 1000
+                : null,
+
+]);
+
+}
+
+
+
+
+
+
+// public function verified()
+// {
+//     $walletAddress = session('wallet_address');
+
+//     if (!$walletAddress) {
+//         return redirect()->route('wallet.login.page');
+//     }
+
+//     $wallet = Wallet::where('wallet_address', $walletAddress)->firstOrFail();
+
+//     // If the link is expired, update user_status
+//     if ($wallet->link_expires_at && now()->greaterThan($wallet->link_expires_at)) {
+//         $wallet->update(['user_status' => 1]);
+//     }
+
+//     return view('wallet.verified', [
+//         'wallet' => $wallet,
+//         'expiresAt' => optional($wallet->link_expires_at)->timestamp * 1000, // JS needs milliseconds
+//     ]);
+// }
+
+
+
+
+//  public function generate()
+//     {
+//         $user = Auth::user();
+
+//         // Only set once (important!)
+//         if (!$user->link_expires_at) {
+//             $user->link_expires_at = Carbon::now()->addHours(24);
+//             $user->user_status = 0; // active
+//             $user->save();
+//         }
+
+//         return redirect()->route('link.view');
+//     }
 
 
 }

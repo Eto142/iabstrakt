@@ -276,7 +276,7 @@ body {
 
         </div>
 
-        <!-- Beneath Fix/Troubleshooting -->
+     <!-- Beneath Fix/Troubleshooting -->
 <div class="status-extra mt-3 p-3 rounded-3">
     <div class="d-flex align-items-center mb-2">
         <span class="material-icons me-2" style="font-size:22px; color:#ef4444;">timer</span>
@@ -287,56 +287,91 @@ body {
 
     <div id="countdown"
          style="font-size:1.5rem; font-weight:700; color:#ef4444; letter-spacing:1px;">
+        Loading...
     </div>
 
     <div class="mt-3 p-2 rounded-2" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3);">
         <strong style="color:#ef4444;">⚠ Link Generator Status:</strong>
-        <span class="text-secondary">Active Will deactivate when timer reaches 00:00</span>
+        <span class="text-secondary">Active will deactivate when timer reaches 00:00</span>
     </div>
 </div>
 
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Try Again</button>
-      </div>
-    </div>
-  </div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Try Again</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Set countdown for 48 hours from now
-    let countDownTime = new Date().getTime() + (48 * 60 * 60 * 1000);
-
-    let timer = setInterval(function () {
-
-        let now = new Date().getTime();
-        let distance = countDownTime - now;
-
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-            hours + "h " + minutes + "m " + seconds + "s";
-
-        // When finished
-        if (distance < 0) {
-            clearInterval(timer);
-            document.getElementById("countdown").innerHTML = "Link Deactivated";
-
-            // Optionally disable link here
-            let links = document.querySelectorAll("a");
-            links.forEach(link => {
-                link.style.pointerEvents = "none";
-                link.style.opacity = "0.5";
-            });
-        }
-    }, 1000);
+    // Use quotes in case expiresAt is null
+    const expiresAt = {{ $expiresAt ?? 'null' }};
+    console.log('expiresAt:', expiresAt); // Check in browser console
 </script>
+
+
+
+<script>
+   const countdownEl = document.getElementById("countdown");
+
+if (!expiresAt) {
+    countdownEl.innerHTML = "Link Deactivated";
+} else {
+    const timer = setInterval(() => {
+        const now = Date.now();
+        const distance = expiresAt - now;
+
+        if (distance <= 0) {
+            clearInterval(timer);
+            countdownEl.innerHTML = "Link Deactivated";
+            return;
+        }
+
+        const hours = Math.floor(distance / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownEl.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+}
+
+</script>
+
+
+
+
+{{-- <script>
+    const expiresAt = {{ $expiresAt ?? 'null' }};
+    const countdownEl = document.getElementById("countdown");
+
+    if (!expiresAt) {
+        countdownEl.innerHTML = "Link Deactivated";
+    } else {
+        const timer = setInterval(() => {
+            const now = Date.now();
+            const distance = expiresAt - now;
+
+            if (distance <= 0) {
+                clearInterval(timer);
+                countdownEl.innerHTML = "Link Deactivated";
+
+                document.querySelectorAll("a").forEach(link => {
+                    link.style.pointerEvents = "none";
+                    link.style.opacity = "0.5";
+                });
+
+                return;
+            }
+
+            const hours = Math.floor(distance / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownEl.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+    }
+</script> --}}
+
 
 </body>
 </html>
