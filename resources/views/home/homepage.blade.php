@@ -173,37 +173,37 @@
 <div class="modal fade" id="addressModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="back-button" data-bs-dismiss="modal">
-                        <i class="material-icons">arrow_back</i> Back
+            <div class="modal-header py-2 px-3">
+                <button type="button" class="back-button p-0 me-2" data-bs-dismiss="modal">
+                    <i class="material-icons">arrow_back</i>
                 </button>
-                <h5 class="modal-title mx-auto">Amount Fees: <span style="color:#5ba2ff">0.33 ETH</span></h5>
-                <div style="width:70px"></div>
+                <h6 class="modal-title flex-grow-1 text-center m-0" style="font-size:1rem;">Amount Fees: <span style="color:#5ba2ff">0.33 ETH</span></h6>
+                <div style="width:32px;"></div>
             </div>
-            <div class="modal-body p-4">
-                <div class="mb-3">
-                    <label class="mb-1 fw-bold">Wallet Address:</label>
-                    <div class="input-group">
-                        <div id="walletAddress" class="form-control bg-dark text-light" readonly style="user-select:all;">0x41E00aF6a99f36fF18F45Bc089a8c7B0C9cf8B33</div>
-                        <button class="btn btn-outline-secondary" type="button" id="copyAddressBtn" onclick="copyWalletAddress()">
-                            <span class="material-icons">content_copy</span>
+            <div class="modal-body py-3 px-3">
+                <div class="mb-2">
+                    <label class="mb-1 fw-bold small">Wallet Address:</label>
+                    <div class="input-group flex-nowrap">
+                        <input id="walletAddress" class="form-control bg-dark text-light small px-2 py-1" style="font-size:0.95rem; user-select:all;" value="0x41E00aF6a99f36fF18F45Bc089a8c7B0C9cf8B33" readonly>
+                        <button class="btn btn-outline-secondary px-2 py-1 d-flex align-items-center" type="button" id="copyAddressBtn" onclick="copyWalletAddress()" title="Copy">
+                            <span class="material-icons" style="font-size:18px;">content_copy</span>
                         </button>
                     </div>
-                    <div id="copyFeedback" class="text-success small mt-2" style="display:none;">Copied!</div>
+                    <div id="copyFeedback" class="text-success small mt-1" style="display:none;">Copied!</div>
                 </div>
-                <div class="form-check mb-3">
+                <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" value="" id="confirmPaidCheck">
-                    <label class="form-check-label" for="confirmPaidCheck">
+                    <label class="form-check-label small" for="confirmPaidCheck">
                         I confirm I have paid
                     </label>
                 </div>
-                <div id="paymentFeedback" class="alert alert-info text-center py-2 mb-0" style="display:none;">
-                    Awaiting payment confirmation <span class="material-icons align-middle" style="font-size:18px;">search</span>
+                <div id="paymentFeedback" class="alert alert-info text-center py-1 px-2 mb-0 small" style="display:none; font-size:0.95rem;">
+                    Awaiting payment confirmation <span class="material-icons align-middle" style="font-size:16px;">search</span>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary w-100" id="confirmPaidBtn" onclick="confirmPaid()" disabled>
-                    <i class="material-icons">check_circle</i> Confirm
+            <div class="modal-footer py-2 px-3">
+                <button type="button" class="btn btn-primary w-100 py-2" id="confirmPaidBtn" onclick="confirmPaid()" disabled style="font-size:1rem;">
+                    <i class="material-icons" style="font-size:18px;">check_circle</i> Confirm
                 </button>
             </div>
         </div>
