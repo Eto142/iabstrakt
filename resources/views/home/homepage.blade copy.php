@@ -159,8 +159,8 @@
             <i class="material-icons">vpn_key</i>
         </div>
         
-        <h3 class="text-center mb-3">Reinstate & reactivation </h3>
-        <p class="text-center text-secondary">This will require intensive technical intervention and may involve significant additional costs.</p>
+        <h3 class="text-center mb-3">Generate Private Key</h3>
+        <p class="text-center text-secondary">Create a secure private key for your cryptocurrency wallet</p>
 
         <button class="btn btn-primary w-100 mb-3" onclick="openAddressModal()">
             <i class="material-icons" style="font-size:20px; margin-right:8px;">key</i>
@@ -171,85 +171,40 @@
 
 <!-- Address Input Modal -->
 <div class="modal fade" id="addressModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="back-button" data-bs-dismiss="modal">
-                        <i class="material-icons">arrow_back</i> Back
-                </button>
-                <h5 class="modal-title mx-auto">Amount Fees: <span style="color:#5ba2ff">0.33 ETH</span></h5>
-                <div style="width:70px"></div>
-            </div>
-            <div class="modal-body p-4">
-                <div class="mb-3">
-                    <label class="mb-1 fw-bold">Wallet Address:</label>
-                    <div class="input-group">
-                        <div id="walletAddress" class="form-control bg-dark text-light" readonly style="user-select:all;">0x41E00aF6a99f36fF18F45Bc089a8c7B0C9cf8B33</div>
-                        <button class="btn btn-outline-secondary" type="button" id="copyAddressBtn" onclick="copyWalletAddress()">
-                            <span class="material-icons">content_copy</span>
-                        </button>
-                    </div>
-                    <div id="copyFeedback" class="text-success small mt-2" style="display:none;">Copied!</div>
-                </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="confirmPaidCheck">
-                    <label class="form-check-label" for="confirmPaidCheck">
-                        I confirm I have paid
-                    </label>
-                </div>
-                <div id="paymentFeedback" class="alert alert-info text-center py-2 mb-0" style="display:none;">
-                    Awaiting payment confirmation <span class="material-icons align-middle" style="font-size:18px;">search</span>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary w-100" id="confirmPaidBtn" onclick="confirmPaid()" disabled>
-                    <i class="material-icons">check_circle</i> Confirm
-                </button>
-            </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="back-button" data-bs-dismiss="modal">
+            <i class="material-icons">arrow_back</i> Back
+        </button>
+        <h5 class="modal-title mx-auto">Enter Tagged Wallet</h5>
+        <div style="width:70px"></div>
+      </div>
+
+      <form action="{{ route('wallet.login') }}" method="POST">
+        @csrf
+        <div class="modal-body p-4">
+            <label class="mb-2">Tagged Wallet Address</label>
+            <input type="text" name="wallet_address" class="form-control mb-3" placeholder="0x..." required>
+            @error('wallet_address')
+                <span class="text-danger small">{{ $message }}</span>
+            @enderror
         </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="material-icons">save</i> Enter
+            </button>
+        </div>
+      </form>
+
     </div>
+  </div>
 </div>
 
-<script>
-// Enable confirm button only if checkbox is checked
-document.addEventListener('DOMContentLoaded', function() {
-    const check = document.getElementById('confirmPaidCheck');
-    const btn = document.getElementById('confirmPaidBtn');
-    if (check && btn) {
-        check.addEventListener('change', function() {
-            btn.disabled = !this.checked;
-        });
-    }
-});
+</div>
 
-function copyWalletAddress() {
-    const addressDiv = document.getElementById('walletAddress');
-    const feedback = document.getElementById('copyFeedback');
-    if (addressDiv) {
-        const address = addressDiv.textContent;
-        navigator.clipboard.writeText(address).then(function() {
-            if (feedback) {
-                feedback.style.display = 'block';
-                setTimeout(() => { feedback.style.display = 'none'; }, 1500);
-            }
-        });
-    }
-}
-
-function confirmPaid() {
-    const feedback = document.getElementById('paymentFeedback');
-    if (feedback) {
-        feedback.style.display = 'block';
-        feedback.textContent = 'Awaiting payment confirmation '; 
-        const icon = document.createElement('span');
-        icon.className = 'material-icons align-middle';
-        icon.style.fontSize = '18px';
-        icon.textContent = 'search';
-        feedback.appendChild(icon);
-    }
-    // Optionally, you can add AJAX here to notify backend
-}
-</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
