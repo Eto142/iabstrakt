@@ -296,7 +296,7 @@
             </div>
         </div>
 
-        <a href="mailto:support@iabstrakt.com?subject=Account%20Suspension%20Appeal" class="btn">Contact Support</a>
+        <a href="mailto:support@iabstrakt.pro?subject=Account%20Suspension%20Appeal" class="btn">Contact Support</a>
 
         <p class="note">
             If you believe this is a mistake, email us and we will resolve it within <strong style="color:#7a91ae">24&ndash;48 hours</strong>.<br>
@@ -327,18 +327,18 @@
                 If you believe this is a mistake, email us and we will resolve it within <strong>24&ndash;48 hours</strong>.
             </div>
 
-            <a href="mailto:support@iabstrakt.com?subject=Account%20Suspension%20Appeal" class="contact-btn btn-support">
+            <a href="mailto:support@iabstrakt.pro?subject=Account%20Suspension%20Appeal" class="contact-btn btn-support">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 8l8.385 5.84a2 2 0 0 0 2.23 0L22 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Contact Support
             </a>
 
-            <a href="mailto:support@iabstrakt.com" class="contact-btn btn-email">
+            <a href="mailto:support@iabstrakt.pro" class="contact-btn btn-email">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 8l8.385 5.84a2 2 0 0 0 2.23 0L22 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                support@iabstrakt.com
+                support@iabstrakt.pro
             </a>
 
             <a href="https://wa.me/message/iabstrakt" target="_blank" rel="noopener noreferrer" class="contact-btn btn-wa">
